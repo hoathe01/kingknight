@@ -12,7 +12,7 @@
 *     is allowing to reduce draw calls when combined with a texture-atlas.
 *
 *     By default, raylib sets the default texture and rectangle at InitWindow()[rcore] to one
-*     white character of default font [rtext], this way, raylib text and shapes can be draw with
+*     white entity of default font [rtext], this way, raylib text and shapes can be draw with
 *     a single draw call and it also allows users to configure it the same way with their own fonts.
 *
 *   CONFIGURATION:
@@ -840,7 +840,7 @@ void DrawRectangleGradientEx(Rectangle rec, Color col1, Color col2, Color col3, 
     rlBegin(RL_QUADS);
         rlNormal3f(0.0f, 0.0f, 1.0f);
 
-        // NOTE: Default raylib font character 95 is a white square
+        // NOTE: Default raylib font entity 95 is a white square
         rlColor4ub(col1.r, col1.g, col1.b, col1.a);
         rlTexCoord2f(texShapesRec.x/texShapes.width, texShapesRec.y/texShapes.height);
         rlVertex2f(rec.x, rec.y);

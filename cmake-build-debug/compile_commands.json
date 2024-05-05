@@ -19,9 +19,9 @@
 },
 {
   "directory": "X:/Mental/CplusGame/KingKnight/cmake-build-debug",
-  "command": "C:\\Users\\hoath\\AppData\\Local\\Programs\\CLion\\bin\\mingw\\bin\\g++.exe -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -IX:/Mental/CplusGame/KingKnight/cmake-build-debug/_deps/raylib-src/src -IX:/Mental/CplusGame/KingKnight/cmake-build-debug/_deps/raylib-src/src/external/glfw/include -g -fdiagnostics-color=always -o CMakeFiles\\KingKnight.dir\\source\\base\\character\\character.cpp.obj -c X:\\Mental\\CplusGame\\KingKnight\\source\\base\\character\\character.cpp",
-  "file": "X:\\Mental\\CplusGame\\KingKnight\\source\\base\\character\\character.cpp",
-  "output": "CMakeFiles\\KingKnight.dir\\source\\base\\character\\character.cpp.obj"
+  "command": "C:\\Users\\hoath\\AppData\\Local\\Programs\\CLion\\bin\\mingw\\bin\\g++.exe -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -IX:/Mental/CplusGame/KingKnight/cmake-build-debug/_deps/raylib-src/src -IX:/Mental/CplusGame/KingKnight/cmake-build-debug/_deps/raylib-src/src/external/glfw/include -g -fdiagnostics-color=always -o CMakeFiles\\KingKnight.dir\\source\\base\\entity\\character.cpp.obj -c X:\\Mental\\CplusGame\\KingKnight\\source\\base\\entity\\character.cpp",
+  "file": "X:\\Mental\\CplusGame\\KingKnight\\source\\base\\entity\\character.cpp",
+  "output": "CMakeFiles\\KingKnight.dir\\source\\base\\entity\\character.cpp.obj"
 },
 {
   "directory": "X:/Mental/CplusGame/KingKnight/cmake-build-debug",

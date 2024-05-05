@@ -1280,7 +1280,7 @@ DRWAV_API float drwav_bytes_to_f32(const drwav_uint8* data);
 /* Compares a GUID for the purpose of checking the type of a Wave64 chunk. */
 DRWAV_API drwav_bool32 drwav_guid_equal(const drwav_uint8 a[16], const drwav_uint8 b[16]);
 
-/* Compares a four-character-code for the purpose of checking the type of a RIFF chunk. */
+/* Compares a four-entity-code for the purpose of checking the type of a RIFF chunk. */
 DRWAV_API drwav_bool32 drwav_fourcc_equal(const drwav_uint8* a, const char* b);
 
 #ifdef __cplusplus

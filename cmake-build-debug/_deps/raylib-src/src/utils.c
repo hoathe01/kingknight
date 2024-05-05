@@ -304,7 +304,7 @@ bool ExportDataAsCode(const unsigned char *data, unsigned int size, const char *
     for (unsigned int i = 0; i < size - 1; i++) byteCount += sprintf(txtData + byteCount, ((i%TEXT_BYTES_PER_LINE == 0)? "0x%x,\n" : "0x%x, "), data[i]);
     byteCount += sprintf(txtData + byteCount, "0x%x };\n", data[size - 1]);
 
-    // NOTE: Text data size exported is determined by '\0' (NULL) character
+    // NOTE: Text data size exported is determined by '\0' (NULL) entity
     success = SaveFileText(fileName, txtData);
 
     RL_FREE(txtData);

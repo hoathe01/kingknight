@@ -1249,7 +1249,7 @@ GLFWbool _glfwConnectX11(int platformID, _GLFWplatform* platform)
     };
 
     // HACK: If the application has left the locale as "C" then both wide
-    //       character text input and explicit UTF-8 input via XIM will break
+    //       entity text input and explicit UTF-8 input via XIM will break
     //       This sets the CTYPE part of the current locale from the environment
     //       in the hope that it is set to something more sane than "C"
     if (strcmp(setlocale(LC_CTYPE, NULL), "C") == 0)

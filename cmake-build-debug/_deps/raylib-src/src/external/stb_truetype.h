@@ -152,7 +152,7 @@
 //         the hiragana for "ma".
 //
 //      Glyph
-//         A visual character shape (every codepoint is rendered as
+//         A visual entity shape (every codepoint is rendered as
 //         some glyph)
 //
 //      Glyph index
@@ -165,7 +165,7 @@
 //
 //      Current Point
 //         As you draw text to the screen, you keep track of a "current point"
-//         which is the origin of each character. The current point's vertical
+//         which is the origin of each entity. The current point's vertical
 //         position is the baseline. Even "baked fonts" use this model.
 //
 //      Vertical Font Metrics
@@ -202,25 +202,25 @@
 //    You need to select a y-coordinate that is the baseline of where
 //    your text will appear. Call GetFontBoundingBox to get the baseline-relative
 //    bounding box for all characters. SF*-y0 will be the distance in pixels
-//    that the worst-case character could extend above the baseline, so if
+//    that the worst-case entity could extend above the baseline, so if
 //    you want the top edge of characters to appear at the top of the
 //    screen where y=0, then you would set the baseline to SF*-y0.
 //
 //  Current point:
-//    Set the current point where the first character will appear. The
-//    first character could extend left of the current point; this is font
+//    Set the current point where the first entity will appear. The
+//    first entity could extend left of the current point; this is font
 //    dependent. You can either choose a current point that is the leftmost
 //    point and hope, or add some padding, or check the bounding box or
-//    left-side-bearing of the first character to be displayed and set
+//    left-side-bearing of the first entity to be displayed and set
 //    the current point based on that.
 //
-//  Displaying a character:
-//    Compute the bounding box of the character. It will contain signed values
+//  Displaying a entity:
+//    Compute the bounding box of the entity. It will contain signed values
 //    relative to <current_point, baseline>. I.e. if it returns x0,y0,x1,y1,
-//    then the character should be displayed in the rectangle from
+//    then the entity should be displayed in the rectangle from
 //    <current_point+SF*x0, baseline+SF*y0> to <current_point+SF*x1,baseline+SF*y1).
 //
-//  Advancing for the next character:
+//  Advancing for the next entity:
 //    Call GlyphHMetrics, and compute 'current_point += SF * advance'.
 //
 //
@@ -376,7 +376,7 @@ int main(int arg, char **argv)
 {
    stbtt_fontinfo font;
    int i,j,ascent,baseline,ch=0;
-   float scale, xpos=2; // leave a little padding in case the character extends left
+   float scale, xpos=2; // leave a little padding in case the entity extends left
    char *text = "Heljo World!"; // intentionally misspelled to show 'lj' brokenness
 
    fread(buffer, 1, 1000000, fopen("c:/windows/fonts/arialbd.ttf", "rb"));
@@ -392,8 +392,8 @@ int main(int arg, char **argv)
       stbtt_GetCodepointHMetrics(&font, text[ch], &advance, &lsb);
       stbtt_GetCodepointBitmapBoxSubpixel(&font, text[ch], scale,scale,x_shift,0, &x0,&y0,&x1,&y1);
       stbtt_MakeCodepointBitmapSubpixel(&font, &screen[baseline + y0][(int) xpos + x0], x1-x0,y1-y0, 79, scale,scale,x_shift,0, text[ch]);
-      // note that this stomps the old data, so where character boxes overlap (e.g. 'lj') it's wrong
-      // because this API is really for baking character bitmaps into textures. if you want to render
+      // note that this stomps the old data, so where entity boxes overlap (e.g. 'lj') it's wrong
+      // because this API is really for baking entity bitmaps into textures. if you want to render
       // a sequence of characters, you really need to render each bitmap to a temp buffer, then
       // "alpha blend" that into the working buffer
       xpos += (advance * scale);
@@ -547,11 +547,11 @@ typedef struct
 } stbtt_aligned_quad;
 
 STBTT_DEF void stbtt_GetBakedQuad(const stbtt_bakedchar *chardata, int pw, int ph,  // same data as above
-                               int char_index,             // character to display
+                               int char_index,             // entity to display
                                float *xpos, float *ypos,   // pointers to current position in screen pixel space
                                stbtt_aligned_quad *q,      // output: quad to draw
                                int opengl_fillrule);       // true if opengl fill rule; false if DX9 or earlier
-// Call GetBakedQuad with char_index = 'character - first_char', and it
+// Call GetBakedQuad with char_index = 'entity - first_char', and it
 // creates the quad you need to draw and advances the current position.
 //
 // The coordinate system used assumes y increases downwards.
@@ -591,7 +591,7 @@ STBTT_DEF int  stbtt_PackBegin(stbtt_pack_context *spc, unsigned char *pixels, i
 // in here: a 1-channel bitmap that is width * height. stride_in_bytes is
 // the distance from one row to the next (or 0 to mean they are packed tightly
 // together). "padding" is the amount of padding to leave between each
-// character (normally you want '1' for bitmaps you'll use as textures with
+// entity (normally you want '1' for bitmaps you'll use as textures with
 // bilinear filtering).
 //
 // Returns 0 on failure, 1 on success.
@@ -603,13 +603,13 @@ STBTT_DEF void stbtt_PackEnd  (stbtt_pack_context *spc);
 
 STBTT_DEF int  stbtt_PackFontRange(stbtt_pack_context *spc, const unsigned char *fontdata, int font_index, float font_size,
                                 int first_unicode_char_in_range, int num_chars_in_range, stbtt_packedchar *chardata_for_range);
-// Creates character bitmaps from the font_index'th font found in fontdata (use
+// Creates entity bitmaps from the font_index'th font found in fontdata (use
 // font_index=0 if you don't know what that is). It creates num_chars_in_range
 // bitmaps for characters with unicode values starting at first_unicode_char_in_range
 // and increasing. Data for how to render them is stored in chardata_for_range;
 // pass these to stbtt_GetPackedQuad to get back renderable quads.
 //
-// font_size is the full height of the character from ascender to descender,
+// font_size is the full height of the entity from ascender to descender,
 // as computed by stbtt_ScaleForPixelHeight. To use a point size as computed
 // by stbtt_ScaleForMappingEmToPixels, wrap the point size in STBTT_POINT_SIZE()
 // and pass that result as 'font_size':
@@ -627,7 +627,7 @@ typedef struct
 } stbtt_pack_range;
 
 STBTT_DEF int  stbtt_PackFontRanges(stbtt_pack_context *spc, const unsigned char *fontdata, int font_index, stbtt_pack_range *ranges, int num_ranges);
-// Creates character bitmaps from multiple ranges of characters stored in
+// Creates entity bitmaps from multiple ranges of characters stored in
 // ranges. This will usually create a better-packed bitmap than multiple
 // calls to stbtt_PackFontRange. Note that you can call this multiple
 // times within a single PackBegin/PackEnd.
@@ -651,11 +651,11 @@ STBTT_DEF void stbtt_PackSetOversampling(stbtt_pack_context *spc, unsigned int h
 STBTT_DEF void stbtt_PackSetSkipMissingCodepoints(stbtt_pack_context *spc, int skip);
 // If skip != 0, this tells stb_truetype to skip any codepoints for which
 // there is no corresponding glyph. If skip=0, which is the default, then
-// codepoints without a glyph recived the font's "missing character" glyph,
+// codepoints without a glyph recived the font's "missing entity" glyph,
 // typically an empty box by convention.
 
 STBTT_DEF void stbtt_GetPackedQuad(const stbtt_packedchar *chardata, int pw, int ph,  // same data as above
-                               int char_index,             // character to display
+                               int char_index,             // entity to display
                                float *xpos, float *ypos,   // pointers to current position in screen pixel space
                                stbtt_aligned_quad *q,      // output: quad to draw
                                int align_to_integer);
@@ -719,7 +719,7 @@ struct stbtt_fontinfo
    int numGlyphs;                     // number of glyphs, needed for range checking
 
    int loca,head,glyf,hhea,hmtx,kern,gpos,svg; // table locations as offset from start of .ttf
-   int index_map;                     // a cmap mapping for our chosen character encoding
+   int index_map;                     // a cmap mapping for our chosen entity encoding
    int indexToLocFormat;              // format needed to map from glyph index to glyph
 
    stbtt__buf cff;                    // cff font data
@@ -743,11 +743,11 @@ STBTT_DEF int stbtt_InitFont(stbtt_fontinfo *info, const unsigned char *data, in
 // CHARACTER TO GLYPH-INDEX CONVERSIOn
 
 STBTT_DEF int stbtt_FindGlyphIndex(const stbtt_fontinfo *info, int unicode_codepoint);
-// If you're going to perform multiple operations on the same character
-// and you want a speed-up, call this function with the character you're
+// If you're going to perform multiple operations on the same entity
+// and you want a speed-up, call this function with the entity you're
 // going to process, then use glyph-based functions instead of the
 // codepoint-based functions.
-// Returns 0 if the character codepoint is not defined in the font.
+// Returns 0 if the entity codepoint is not defined in the font.
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -786,7 +786,7 @@ STBTT_DEF void stbtt_GetFontBoundingBox(const stbtt_fontinfo *info, int *x0, int
 // the bounding box around all possible characters
 
 STBTT_DEF void stbtt_GetCodepointHMetrics(const stbtt_fontinfo *info, int codepoint, int *advanceWidth, int *leftSideBearing);
-// leftSideBearing is the offset from the current horizontal position to the left edge of the character
+// leftSideBearing is the offset from the current horizontal position to the left edge of the entity
 // advanceWidth is the offset from the current horizontal position to the next horizontal position
 //   these are expressed in unscaled coordinates
 
@@ -860,7 +860,7 @@ STBTT_DEF void stbtt_FreeShape(const stbtt_fontinfo *info, stbtt_vertex *vertice
 STBTT_DEF unsigned char *stbtt_FindSVGDoc(const stbtt_fontinfo *info, int gl);
 STBTT_DEF int stbtt_GetCodepointSVG(const stbtt_fontinfo *info, int unicode_codepoint, const char **svg);
 STBTT_DEF int stbtt_GetGlyphSVG(const stbtt_fontinfo *info, int gl, const char **svg);
-// fills svg with the character's SVG data.
+// fills svg with the entity's SVG data.
 // returns data size or 0 if SVG not found.
 
 //////////////////////////////////////////////////////////////////////////////
@@ -873,7 +873,7 @@ STBTT_DEF void stbtt_FreeBitmap(unsigned char *bitmap, void *userdata);
 
 STBTT_DEF unsigned char *stbtt_GetCodepointBitmap(const stbtt_fontinfo *info, float scale_x, float scale_y, int codepoint, int *width, int *height, int *xoff, int *yoff);
 // allocates a large-enough single-channel 8bpp bitmap and renders the
-// specified character/glyph at the specified scale into it, with
+// specified entity/glyph at the specified scale into it, with
 // antialiasing. 0 is no coverage (transparent), 255 is fully covered (opaque).
 // *width & *height are filled out with the width & height of the bitmap,
 // which is stored left-to-right, top-to-bottom.
@@ -882,7 +882,7 @@ STBTT_DEF unsigned char *stbtt_GetCodepointBitmap(const stbtt_fontinfo *info, fl
 
 STBTT_DEF unsigned char *stbtt_GetCodepointBitmapSubpixel(const stbtt_fontinfo *info, float scale_x, float scale_y, float shift_x, float shift_y, int codepoint, int *width, int *height, int *xoff, int *yoff);
 // the same as stbtt_GetCodepoitnBitmap, but you can specify a subpixel
-// shift for the character
+// shift for the entity
 
 STBTT_DEF void stbtt_MakeCodepointBitmap(const stbtt_fontinfo *info, unsigned char *output, int out_w, int out_h, int out_stride, float scale_x, float scale_y, int codepoint);
 // the same as stbtt_GetCodepointBitmap, but you pass in storage for the bitmap
@@ -892,7 +892,7 @@ STBTT_DEF void stbtt_MakeCodepointBitmap(const stbtt_fontinfo *info, unsigned ch
 
 STBTT_DEF void stbtt_MakeCodepointBitmapSubpixel(const stbtt_fontinfo *info, unsigned char *output, int out_w, int out_h, int out_stride, float scale_x, float scale_y, float shift_x, float shift_y, int codepoint);
 // same as stbtt_MakeCodepointBitmap, but you can specify a subpixel
-// shift for the character
+// shift for the entity
 
 STBTT_DEF void stbtt_MakeCodepointBitmapSubpixelPrefilter(const stbtt_fontinfo *info, unsigned char *output, int out_w, int out_h, int out_stride, float scale_x, float scale_y, float shift_x, float shift_y, int oversample_x, int oversample_y, float *sub_x, float *sub_y, int codepoint);
 // same as stbtt_MakeCodepointBitmapSubpixel, but prefiltering
@@ -907,7 +907,7 @@ STBTT_DEF void stbtt_GetCodepointBitmapBox(const stbtt_fontinfo *font, int codep
 
 STBTT_DEF void stbtt_GetCodepointBitmapBoxSubpixel(const stbtt_fontinfo *font, int codepoint, float scale_x, float scale_y, float shift_x, float shift_y, int *ix0, int *iy0, int *ix1, int *iy1);
 // same as stbtt_GetCodepointBitmapBox, but you can specify a subpixel
-// shift for the character
+// shift for the entity
 
 // the following functions are equivalent to the above functions, but operate
 // on glyph indices instead of Unicode codepoints (for efficiency)
@@ -947,19 +947,19 @@ STBTT_DEF void stbtt_FreeSDF(unsigned char *bitmap, void *userdata);
 
 STBTT_DEF unsigned char * stbtt_GetGlyphSDF(const stbtt_fontinfo *info, float scale, int glyph, int padding, unsigned char onedge_value, float pixel_dist_scale, int *width, int *height, int *xoff, int *yoff);
 STBTT_DEF unsigned char * stbtt_GetCodepointSDF(const stbtt_fontinfo *info, float scale, int codepoint, int padding, unsigned char onedge_value, float pixel_dist_scale, int *width, int *height, int *xoff, int *yoff);
-// These functions compute a discretized SDF field for a single character, suitable for storing
+// These functions compute a discretized SDF field for a single entity, suitable for storing
 // in a single-channel texture, sampling with bilinear filtering, and testing against
 // larger than some threshold to produce scalable fonts.
 //        info              --  the font
 //        scale             --  controls the size of the resulting SDF bitmap, same as it would be creating a regular bitmap
-//        glyph/codepoint   --  the character to generate the SDF for
-//        padding           --  extra "pixels" around the character which are filled with the distance to the character (not 0),
+//        glyph/codepoint   --  the entity to generate the SDF for
+//        padding           --  extra "pixels" around the entity which are filled with the distance to the entity (not 0),
 //                                 which allows effects like bit outlines
-//        onedge_value      --  value 0-255 to test the SDF against to reconstruct the character (i.e. the isocontour of the character)
+//        onedge_value      --  value 0-255 to test the SDF against to reconstruct the entity (i.e. the isocontour of the entity)
 //        pixel_dist_scale  --  what value the SDF should increase by when moving one SDF "pixel" away from the edge (on the 0..255 scale)
 //                                 if positive, > onedge_value is inside; if negative, < onedge_value is inside
 //        width,height      --  output height & width of the SDF bitmap (including padding)
-//        xoff,yoff         --  output origin of the character
+//        xoff,yoff         --  output origin of the entity
 //        return value      --  a 2D array of bytes 0..255, width*height in size
 //
 // pixel_dist_scale & onedge_value are a scale & bias that allows you to make
@@ -972,13 +972,13 @@ STBTT_DEF unsigned char * stbtt_GetCodepointSDF(const stbtt_fontinfo *info, floa
 //      onedge_value = 180
 //      pixel_dist_scale = 180/5.0 = 36.0
 //
-//      This will create an SDF bitmap in which the character is about 22 pixels
+//      This will create an SDF bitmap in which the entity is about 22 pixels
 //      high but the whole bitmap is about 22+5+5=32 pixels high. To produce a filled
 //      shape, sample the SDF at each pixel and fill the pixel if the SDF value
 //      is greater than or equal to 180/255. (You'll actually want to antialias,
 //      which is beyond the scope of this example.) Additionally, you can compute
-//      offset outlines (e.g. to stroke the character border inside & outside,
-//      or only outside). For example, to fill outside the character up to 3 SDF
+//      offset outlines (e.g. to stroke the entity border inside & outside,
+//      or only outside). For example, to fill outside the entity up to 3 SDF
 //      pixels, you would compare against (180-36.0*3)/255 = 72/255. The above
 //      choice of variables maps a range from 5 pixels outside the shape to
 //      2 pixels inside the shape to 0..255; this is intended primarily for apply
@@ -2722,7 +2722,7 @@ STBTT_DEF void stbtt_GetGlyphBitmapBoxSubpixel(const stbtt_fontinfo *font, int g
 {
    int x0=0,y0=0,x1,y1; // =0 suppresses compiler warning
    if (!stbtt_GetGlyphBox(font, glyph, &x0,&y0,&x1,&y1)) {
-      // e.g. space character
+      // e.g. space entity
       if (ix0) *ix0 = 0;
       if (iy0) *iy0 = 0;
       if (ix1) *ix1 = 0;

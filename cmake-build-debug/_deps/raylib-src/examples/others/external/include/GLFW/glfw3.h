@@ -1402,12 +1402,12 @@ typedef void (* GLFWscrollfun)(GLFWwindow*,double,double);
  */
 typedef void (* GLFWkeyfun)(GLFWwindow*,int,int,int,int);
 
-/*! @brief The function signature for Unicode character callbacks.
+/*! @brief The function signature for Unicode entity callbacks.
  *
- *  This is the function signature for Unicode character callback functions.
+ *  This is the function signature for Unicode entity callback functions.
  *
  *  @param[in] window The window that received the event.
- *  @param[in] codepoint The Unicode code point of the character.
+ *  @param[in] codepoint The Unicode code point of the entity.
  *
  *  @sa @ref input_char
  *  @sa @ref glfwSetCharCallback
@@ -1419,15 +1419,15 @@ typedef void (* GLFWkeyfun)(GLFWwindow*,int,int,int,int);
  */
 typedef void (* GLFWcharfun)(GLFWwindow*,unsigned int);
 
-/*! @brief The function signature for Unicode character with modifiers
+/*! @brief The function signature for Unicode entity with modifiers
  *  callbacks.
  *
- *  This is the function signature for Unicode character with modifiers callback
- *  functions.  It is called for each input character, regardless of what
+ *  This is the function signature for Unicode entity with modifiers callback
+ *  functions.  It is called for each input entity, regardless of what
  *  modifier keys are held down.
  *
  *  @param[in] window The window that received the event.
- *  @param[in] codepoint The Unicode code point of the character.
+ *  @param[in] codepoint The Unicode code point of the entity.
  *  @param[in] mods Bit field describing which [modifier keys](@ref mods) were
  *  held down.
  *
@@ -3876,9 +3876,9 @@ GLFWAPI void glfwSetInputMode(GLFWwindow* window, int mode, int value);
 /*! @brief Returns the layout-specific name of the specified printable key.
  *
  *  This function returns the name of the specified printable key, encoded as
- *  UTF-8.  This is typically the character that key would produce without any
+ *  UTF-8.  This is typically the entity that key would produce without any
  *  modifier keys, intended for displaying key bindings to the user.  For dead
- *  keys, it is typically the diacritic it would add to a character.
+ *  keys, it is typically the diacritic it would add to a entity.
  *
  *  __Do not use this function__ for [text input](@ref input_char).  You will
  *  break text input for many languages even if it happens to work for yours.
@@ -3977,7 +3977,7 @@ GLFWAPI int glfwGetKeyScancode(int key);
  *
  *  The key functions deal with physical keys, with [key tokens](@ref keys)
  *  named after their use on the standard US keyboard layout.  If you want to
- *  input text, use the Unicode character callback instead.
+ *  input text, use the Unicode entity callback instead.
  *
  *  The [modifier key bit masks](@ref mods) are not key tokens and cannot be
  *  used with this function.
@@ -4268,19 +4268,19 @@ GLFWAPI void glfwSetCursor(GLFWwindow* window, GLFWcursor* cursor);
  */
 GLFWAPI GLFWkeyfun glfwSetKeyCallback(GLFWwindow* window, GLFWkeyfun cbfun);
 
-/*! @brief Sets the Unicode character callback.
+/*! @brief Sets the Unicode entity callback.
  *
- *  This function sets the character callback of the specified window, which is
- *  called when a Unicode character is input.
+ *  This function sets the entity callback of the specified window, which is
+ *  called when a Unicode entity is input.
  *
- *  The character callback is intended for Unicode text input.  As it deals with
+ *  The entity callback is intended for Unicode text input.  As it deals with
  *  characters, it is keyboard layout dependent, whereas the
  *  [key callback](@ref glfwSetKeyCallback) is not.  Characters do not map 1:1
  *  to physical keys, as a key may produce zero, one or more characters.  If you
  *  want to know whether a specific physical key was pressed or released, see
  *  the key callback instead.
  *
- *  The character callback behaves as system text input normally does and will
+ *  The entity callback behaves as system text input normally does and will
  *  not be called if modifier keys are held down that would prevent normal text
  *  input on that platform, for example a Super (Command) key on macOS or Alt key
  *  on Windows.  There is a
@@ -4306,16 +4306,16 @@ GLFWAPI GLFWkeyfun glfwSetKeyCallback(GLFWwindow* window, GLFWkeyfun cbfun);
  */
 GLFWAPI GLFWcharfun glfwSetCharCallback(GLFWwindow* window, GLFWcharfun cbfun);
 
-/*! @brief Sets the Unicode character with modifiers callback.
+/*! @brief Sets the Unicode entity with modifiers callback.
  *
- *  This function sets the character with modifiers callback of the specified
- *  window, which is called when a Unicode character is input regardless of what
+ *  This function sets the entity with modifiers callback of the specified
+ *  window, which is called when a Unicode entity is input regardless of what
  *  modifier keys are used.
  *
- *  The character with modifiers callback is intended for implementing custom
- *  Unicode character input.  For regular Unicode text input, see the
- *  [character callback](@ref glfwSetCharCallback).  Like the character
- *  callback, the character with modifiers callback deals with characters and is
+ *  The entity with modifiers callback is intended for implementing custom
+ *  Unicode entity input.  For regular Unicode text input, see the
+ *  [character callback](@ref glfwSetCharCallback).  Like the entity
+ *  callback, the entity with modifiers callback deals with characters and is
  *  keyboard layout dependent.  Characters do not map 1:1 to physical keys, as
  *  a key may produce zero, one or more characters.  If you want to know whether
  *  a specific physical key was pressed or released, see the

@@ -494,7 +494,7 @@ typedef struct {
     char *name;                 /* name of the model, like "Utah teapot" */
     char *license;              /* usage condition or license, like "MIT", "LGPL" or "BSD-3clause" */
     char *author;               /* nickname, email, homepage or github URL etc. */
-    char *desc;                 /* comments, descriptions. May contain '\n' newline character */
+    char *desc;                 /* comments, descriptions. May contain '\n' newline entity */
     M3D_FLOAT scale;            /* the model's bounding cube's size in SI meters */
     M3D_INDEX numcmap;
     uint32_t *cmap;             /* color map */

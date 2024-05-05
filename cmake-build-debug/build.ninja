@@ -73,13 +73,13 @@ build CMakeFiles/KingKnight.dir/source/base/main/base.cpp.obj: CXX_COMPILER__Kin
   OBJECT_DIR = CMakeFiles\KingKnight.dir
   OBJECT_FILE_DIR = CMakeFiles\KingKnight.dir\source\base\main
 
-build CMakeFiles/KingKnight.dir/source/base/character/character.cpp.obj: CXX_COMPILER__KingKnight_unscanned_Debug X$:/Mental/CplusGame/KingKnight/source/base/character/character.cpp || cmake_object_order_depends_target_KingKnight
+build CMakeFiles/KingKnight.dir/source/base/entity/character.cpp.obj: CXX_COMPILER__KingKnight_unscanned_Debug X$:/Mental/CplusGame/KingKnight/source/base/entity/character.cpp || cmake_object_order_depends_target_KingKnight
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
-  DEP_FILE = CMakeFiles\KingKnight.dir\source\base\character\character.cpp.obj.d
+  DEP_FILE = CMakeFiles\KingKnight.dir\source\base\entity\character.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always
   INCLUDES = -IX:/Mental/CplusGame/KingKnight/cmake-build-debug/_deps/raylib-src/src -IX:/Mental/CplusGame/KingKnight/cmake-build-debug/_deps/raylib-src/src/external/glfw/include
   OBJECT_DIR = CMakeFiles\KingKnight.dir
-  OBJECT_FILE_DIR = CMakeFiles\KingKnight.dir\source\base\character
+  OBJECT_FILE_DIR = CMakeFiles\KingKnight.dir\source\base\entity
 
 build CMakeFiles/KingKnight.dir/source/base/main/function.cpp.obj: CXX_COMPILER__KingKnight_unscanned_Debug X$:/Mental/CplusGame/KingKnight/source/base/main/function.cpp || cmake_object_order_depends_target_KingKnight
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
@@ -97,7 +97,7 @@ build CMakeFiles/KingKnight.dir/source/base/main/function.cpp.obj: CXX_COMPILER_
 #############################################
 # Link the executable KingKnight.exe
 
-build KingKnight.exe: CXX_EXECUTABLE_LINKER__KingKnight_Debug CMakeFiles/KingKnight.dir/main.cpp.obj CMakeFiles/KingKnight.dir/source/config/GameConfiguration.cpp.obj CMakeFiles/KingKnight.dir/source/base/main/base.cpp.obj CMakeFiles/KingKnight.dir/source/base/character/character.cpp.obj CMakeFiles/KingKnight.dir/source/base/main/function.cpp.obj | _deps/raylib-build/raylib/libraylib.a _deps/raylib-build/raylib/external/glfw/src/libglfw3.a || _deps/raylib-build/raylib/external/glfw/src/libglfw3.a _deps/raylib-build/raylib/libraylib.a
+build KingKnight.exe: CXX_EXECUTABLE_LINKER__KingKnight_Debug CMakeFiles/KingKnight.dir/main.cpp.obj CMakeFiles/KingKnight.dir/source/config/GameConfiguration.cpp.obj CMakeFiles/KingKnight.dir/source/base/main/base.cpp.obj CMakeFiles/KingKnight.dir/source/base/entity/character.cpp.obj CMakeFiles/KingKnight.dir/source/base/main/function.cpp.obj | _deps/raylib-build/raylib/libraylib.a _deps/raylib-build/raylib/external/glfw/src/libglfw3.a || _deps/raylib-build/raylib/external/glfw/src/libglfw3.a _deps/raylib-build/raylib/libraylib.a
   FLAGS = -g
   LINK_LIBRARIES = _deps/raylib-build/raylib/libraylib.a  -lopengl32  -lglu32  -lwinmm  _deps/raylib-build/raylib/external/glfw/src/libglfw3.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\KingKnight.dir

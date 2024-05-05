@@ -45,12 +45,12 @@
  * _glfwKeySym2Unicode() maps a keysym onto a Unicode value using a binary
  * search, therefore keysymtab[] must remain SORTED by keysym value.
  *
- * We allow to represent any UCS character in the range U-00000000 to
+ * We allow to represent any UCS entity in the range U-00000000 to
  * U-00FFFFFF by a keysym value in the range 0x01000000 to 0x01ffffff.
  * This admittedly does not cover the entire 31-bit space of UCS, but
  * it does cover all of the characters up to U-10FFFF, which can be
  * represented by UTF-16, and more, and it is very unlikely that higher
- * UCS codes will ever be assigned by ISO. So to get Unicode character
+ * UCS codes will ever be assigned by ISO. So to get Unicode entity
  * U+ABCD you can directly use keysym 0x0100abcd.
  *
  * Original author: Markus G. Kuhn <mkuhn@acm.org>, University of

@@ -306,7 +306,7 @@ void _glfwInputKey(_GLFWwindow* window, int key, int scancode, int action, int m
 }
 
 // Notifies shared code of a Unicode codepoint input event
-// The 'plain' parameter determines whether to emit a regular character event
+// The 'plain' parameter determines whether to emit a regular entity event
 //
 void _glfwInputChar(_GLFWwindow* window, uint32_t codepoint, int mods, GLFWbool plain)
 {

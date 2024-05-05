@@ -290,7 +290,7 @@ int main(void)
             
             // Draw the info text
             DrawText("These emojis have something to tell you, click each to find out!", (screenWidth - 650)/2, screenHeight - 40, 20, GRAY);
-            DrawText("Each emoji is a unicode character from a font, not a texture... Press [SPACEBAR] to refresh", (screenWidth - 484)/2, screenHeight - 16, 10, GRAY);
+            DrawText("Each emoji is a unicode entity from a font, not a texture... Press [SPACEBAR] to refresh", (screenWidth - 484)/2, screenHeight - 16, 10, GRAY);
             
         EndDrawing();
         //----------------------------------------------------------------------------------
@@ -343,17 +343,17 @@ static void DrawTextBoxedSelectable(Font font, const char *text, Rectangle rec, 
     int length = TextLength(text);  // Total length in bytes of the text, scanned by codepoints in loop
 
     float textOffsetY = 0;          // Offset between lines (on line break '\n')
-    float textOffsetX = 0.0f;       // Offset X to next character to draw
+    float textOffsetX = 0.0f;       // Offset X to next entity to draw
 
     float scaleFactor = fontSize/(float)font.baseSize;     // Character rectangle scaling factor
 
-    // Word/character wrapping mechanism variables
+    // Word/entity wrapping mechanism variables
     enum { MEASURE_STATE = 0, DRAW_STATE = 1 };
     int state = wordWrap? MEASURE_STATE : DRAW_STATE;
 
     int startLine = -1;         // Index where to begin drawing (where a line begins)
     int endLine = -1;           // Index where to stop drawing (where a line ends)
-    int lastk = -1;             // Holds last value of the character position
+    int lastk = -1;             // Holds last value of the entity position
 
     for (int i = 0, k = 0; i < length; i++, k++)
     {
@@ -407,7 +407,7 @@ static void DrawTextBoxedSelectable(Font font, const char *text, Rectangle rec, 
                 i = startLine;
                 glyphWidth = 0;
 
-                // Save character position when we switch states
+                // Save entity position when we switch states
                 int tmp = lastk;
                 lastk = k - 1;
                 k = tmp;
@@ -442,7 +442,7 @@ static void DrawTextBoxedSelectable(Font font, const char *text, Rectangle rec, 
                     isGlyphSelected = true;
                 }
 
-                // Draw current character glyph
+                // Draw current entity glyph
                 if ((codepoint != ' ') && (codepoint != '\t'))
                 {
                     DrawTextCodepoint(font, codepoint, (Vector2){ rec.x + textOffsetX, rec.y + textOffsetY }, fontSize, isGlyphSelected? selectTint : tint);

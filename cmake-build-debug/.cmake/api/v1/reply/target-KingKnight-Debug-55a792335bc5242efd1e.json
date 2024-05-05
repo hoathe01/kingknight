@@ -211,12 +211,12 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "source/base/character/character.cpp",
+			"path" : "source/base/entity/character.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "source/base/character/character.h",
+			"path" : "source/base/entity/character.h",
 			"sourceGroupIndex" : 1
 		},
 		{

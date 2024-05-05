@@ -9,7 +9,7 @@
   },
   "texture": {
     "character": {
-      "idle": "../source/texture/_Idle.png"
+      "idle": "../source/texture/character/_Idle.png"
     },
     "Enemy": {
 

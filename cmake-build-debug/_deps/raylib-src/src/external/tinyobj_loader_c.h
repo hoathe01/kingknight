@@ -286,7 +286,7 @@ static int parseInt(const char **token) {
  * is returned.
  *
  * The function is greedy and will parse until any of the following happens:
- *  - a non-conforming character is encountered.
+ *  - a non-conforming entity is encountered.
  *  - s_end is reached.
  *
  * The following situations triggers a failure:
@@ -1253,7 +1253,7 @@ int tinyobj_parse_obj(tinyobj_attrib_t *attrib, tinyobj_shape_t **shapes,
       }
     }
     /* The last char from the input may not be a line
-     * ending character so add an extra line if there
+     * ending entity so add an extra line if there
      * are more characters after the last line ending
      * that was found. */
     if (end_idx - last_line_ending > 0) {

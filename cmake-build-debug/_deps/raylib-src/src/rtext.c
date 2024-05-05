@@ -259,12 +259,12 @@ extern void LoadFontDefault(void)
         }
         else currentPosX = testPosX;
 
-        // NOTE: On default font character offsets and xAdvance are not required
+        // NOTE: On default font entity offsets and xAdvance are not required
         defaultFont.glyphs[i].offsetX = 0;
         defaultFont.glyphs[i].offsetY = 0;
         defaultFont.glyphs[i].advanceX = 0;
 
-        // Fill character image data from fontClear data
+        // Fill entity image data from fontClear data
         defaultFont.glyphs[i].image = ImageFromImage(imFont, defaultFont.recs[i]);
     }
 
@@ -472,15 +472,15 @@ Font LoadFontFromImage(Image image, Color key, int firstChar)
     {
         font.glyphs[i].value = tempCharValues[i];
 
-        // Get character rectangle in the font atlas texture
+        // Get entity rectangle in the font atlas texture
         font.recs[i] = tempCharRecs[i];
 
-        // NOTE: On image based fonts (XNA style), character offsets and xAdvance are not required (set to 0)
+        // NOTE: On image based fonts (XNA style), entity offsets and xAdvance are not required (set to 0)
         font.glyphs[i].offsetX = 0;
         font.glyphs[i].offsetY = 0;
         font.glyphs[i].advanceX = 0;
 
-        // Fill character image data from fontClear data
+        // Fill entity image data from fontClear data
         font.glyphs[i].image = ImageFromImage(fontClear, tempCharRecs[i]);
     }
 
@@ -629,7 +629,7 @@ GlyphInfo *LoadFontData(const unsigned char *fileData, int dataSize, int fontSiz
 
                 chars[i].offsetY += (int)((float)ascent*scaleFactor);
 
-                // NOTE: We create an empty image for space character, it could be further required for atlas packing
+                // NOTE: We create an empty image for space entity, it could be further required for atlas packing
                 if (ch == 32)
                 {
                     Image imSpace = {
@@ -654,7 +654,7 @@ GlyphInfo *LoadFontData(const unsigned char *fileData, int dataSize, int fontSiz
                     }
                 }
 
-                // Get bounding box for character (maybe offset to account for chars that dip above or below the line)
+                // Get bounding box for entity (maybe offset to account for chars that dip above or below the line)
                 /*
                 int chX1, chY1, chX2, chY2;
                 stbtt_GetCodepointBitmapBox(&fontInfo, ch, scaleFactor, scaleFactor, &chX1, &chY1, &chX2, &chY2);
@@ -735,7 +735,7 @@ Image GenImageFontAtlas(const GlyphInfo *chars, Rectangle **charRecs, int glyphC
             recs[i].width = (float)chars[i].image.width;
             recs[i].height = (float)chars[i].image.height;
 
-            // Move atlas position X for next character drawing
+            // Move atlas position X for next entity drawing
             offsetX += (chars[i].image.width + 2*padding);
 
             if (offsetX >= (atlas.width - chars[i].image.width - 2*padding))
@@ -751,7 +751,7 @@ Image GenImageFontAtlas(const GlyphInfo *chars, Rectangle **charRecs, int glyphC
                 {
                     for(int j = i + 1; j < glyphCount; j++)
                     {
-                        TRACELOG(LOG_WARNING, "FONT: Failed to package character (%i)", j);
+                        TRACELOG(LOG_WARNING, "FONT: Failed to package entity (%i)", j);
                         // make sure remaining recs contain valid data
                         recs[j].x = 0;
                         recs[j].y = 0;
@@ -801,7 +801,7 @@ Image GenImageFontAtlas(const GlyphInfo *chars, Rectangle **charRecs, int glyphC
                     }
                 }
             }
-            else TRACELOG(LOG_WARNING, "FONT: Failed to package character (%i)", i);
+            else TRACELOG(LOG_WARNING, "FONT: Failed to package entity (%i)", i);
         }
 
         RL_FREE(rects);
@@ -996,7 +996,7 @@ bool ExportFontAsCode(Font font, const char *fileName)
 
     UnloadImage(image);
 
-    // NOTE: Text data size exported is determined by '\0' (NULL) character
+    // NOTE: Text data size exported is determined by '\0' (NULL) entity
     success = SaveFileText(fileName, txtData);
 
     RL_FREE(txtData);
@@ -1048,7 +1048,7 @@ void DrawTextEx(Font font, const char *text, Vector2 position, float fontSize, f
     int size = TextLength(text);    // Total size in bytes of the text, scanned by codepoints in loop
 
     int textOffsetY = 0;            // Offset between lines (on linebreak '\n')
-    float textOffsetX = 0.0f;       // Offset X to next character to draw
+    float textOffsetX = 0.0f;       // Offset X to next entity to draw
 
     float scaleFactor = fontSize/font.baseSize;         // Character quad scaling factor
 
@@ -1099,7 +1099,7 @@ void DrawTextPro(Font font, const char *text, Vector2 position, Vector2 origin, 
     rlPopMatrix();
 }
 
-// Draw one character (codepoint)
+// Draw one entity (codepoint)
 void DrawTextCodepoint(Font font, int codepoint, Vector2 position, float fontSize, Color tint)
 {
     // Character index position in sprite font
@@ -1119,15 +1119,15 @@ void DrawTextCodepoint(Font font, int codepoint, Vector2 position, float fontSiz
     Rectangle srcRec = { font.recs[index].x - (float)font.glyphPadding, font.recs[index].y - (float)font.glyphPadding,
                          font.recs[index].width + 2.0f*font.glyphPadding, font.recs[index].height + 2.0f*font.glyphPadding };
 
-    // Draw the character texture on the screen
+    // Draw the entity texture on the screen
     DrawTexturePro(font.texture, srcRec, dstRec, (Vector2){ 0, 0 }, 0.0f, tint);
 }
 
-// Draw multiple character (codepoints)
+// Draw multiple entity (codepoints)
 void DrawTextCodepoints(Font font, const int *codepoints, int count, Vector2 position, float fontSize, float spacing, Color tint)
 {
     int textOffsetY = 0;            // Offset between lines (on linebreak '\n')
-    float textOffsetX = 0.0f;       // Offset X to next character to draw
+    float textOffsetX = 0.0f;       // Offset X to next entity to draw
 
     float scaleFactor = fontSize/font.baseSize;         // Character quad scaling factor
 
@@ -1190,7 +1190,7 @@ Vector2 MeasureTextEx(Font font, const char *text, float fontSize, float spacing
     float textHeight = (float)font.baseSize;
     float scaleFactor = fontSize/(float)font.baseSize;
 
-    int letter = 0;                 // Current character
+    int letter = 0;                 // Current entity
     int index = 0;                  // Index position in sprite font
 
     for (int i = 0; i < size; i++)
@@ -1230,7 +1230,7 @@ Vector2 MeasureTextEx(Font font, const char *text, float fontSize, float spacing
     return textSize;
 }
 
-// Get index position for a unicode character on font
+// Get index position for a unicode entity on font
 // NOTE: If codepoint is not found in the font it fallbacks to '?'
 int GetGlyphIndex(Font font, int codepoint)
 {
@@ -1258,7 +1258,7 @@ int GetGlyphIndex(Font font, int codepoint)
 #endif
 }
 
-// Get glyph font info data for a codepoint (unicode character)
+// Get glyph font info data for a codepoint (unicode entity)
 // NOTE: If codepoint is not found in the font it fallbacks to '?'
 GlyphInfo GetGlyphInfo(Font font, int codepoint)
 {
@@ -1269,7 +1269,7 @@ GlyphInfo GetGlyphInfo(Font font, int codepoint)
     return info;
 }
 
-// Get glyph rectangle in font atlas for a codepoint (unicode character)
+// Get glyph rectangle in font atlas for a codepoint (unicode entity)
 // NOTE: If codepoint is not found in the font it fallbacks to '?'
 Rectangle GetGlyphAtlasRec(Font font, int codepoint)
 {
@@ -1283,7 +1283,7 @@ Rectangle GetGlyphAtlasRec(Font font, int codepoint)
 //----------------------------------------------------------------------------------
 // Text strings management functions
 //----------------------------------------------------------------------------------
-// Get text length in bytes, check for \0 character
+// Get text length in bytes, check for \0 entity
 unsigned int TextLength(const char *text)
 {
     unsigned int length = 0; //strlen(text)
@@ -1775,7 +1775,7 @@ const char *CodepointToUTF8(int codepoint, int *utf8Size)
 // When an invalid UTF-8 byte is encountered we exit as soon as possible and a '?'(0x3f) codepoint is returned
 // Total number of bytes processed are returned as a parameter
 // NOTE: The standard says U+FFFD should be returned in case of errors
-// but that character is not supported by the default font in raylib
+// but that entity is not supported by the default font in raylib
 int GetCodepoint(const char *text, int *codepointSize)
 {
 /*
@@ -2065,7 +2065,7 @@ static Font LoadBMFont(const char *fileName)
                        &charId, &charX, &charY, &charWidth, &charHeight, &charOffsetX, &charOffsetY, &charAdvanceX);
         fileTextPtr += (lineBytes + 1);
 
-        // Get character rectangle in the font atlas texture
+        // Get entity rectangle in the font atlas texture
         font.recs[i] = (Rectangle){ (float)charX, (float)charY, (float)charWidth, (float)charHeight };
 
         // Save data properly in sprite font
@@ -2074,7 +2074,7 @@ static Font LoadBMFont(const char *fileName)
         font.glyphs[i].offsetY = charOffsetY;
         font.glyphs[i].advanceX = charAdvanceX;
 
-        // Fill character image data from imFont data
+        // Fill entity image data from imFont data
         font.glyphs[i].image = ImageFromImage(imFont, font.recs[i]);
     }
 

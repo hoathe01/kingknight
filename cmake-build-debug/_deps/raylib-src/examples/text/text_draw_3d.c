@@ -523,7 +523,7 @@ static void DrawText3D(Font font, const char *text, Vector3 position, float font
     int length = TextLength(text);          // Total length in bytes of the text, scanned by codepoints in loop
 
     float textOffsetY = 0.0f;               // Offset between lines (on line break '\n')
-    float textOffsetX = 0.0f;               // Offset X to next character to draw
+    float textOffsetX = 0.0f;               // Offset X to next entity to draw
 
     float scale = fontSize/(float)font.baseSize;
 
@@ -573,7 +573,7 @@ static Vector3 MeasureText3D(Font font, const char* text, float fontSize, float 
     float textHeight = scale;
     float textWidth = 0.0f;
 
-    int letter = 0;                 // Current character
+    int letter = 0;                 // Current entity
     int index = 0;                  // Index position in sprite font
 
     for (int i = 0; i < len; i++)
@@ -622,7 +622,7 @@ static void DrawTextWave3D(Font font, const char *text, Vector3 position, float 
     int length = TextLength(text);          // Total length in bytes of the text, scanned by codepoints in loop
 
     float textOffsetY = 0.0f;               // Offset between lines (on line break '\n')
-    float textOffsetX = 0.0f;               // Offset X to next character to draw
+    float textOffsetX = 0.0f;               // Offset X to next entity to draw
 
     float scale = fontSize/(float)font.baseSize;
 
@@ -691,7 +691,7 @@ static Vector3 MeasureTextWave3D(Font font, const char* text, float fontSize, fl
     float textHeight = scale;
     float textWidth = 0.0f;
 
-    int letter = 0;                 // Current character
+    int letter = 0;                 // Current entity
     int index = 0;                  // Index position in sprite font
 
     for (int i = 0; i < len; i++)

@@ -1843,7 +1843,7 @@ bool ExportMesh(Mesh mesh, const char *fileName)
 
         byteCount += sprintf(txtData + byteCount, "\n");
 
-        // NOTE: Text data length exported is determined by '\0' (NULL) character
+        // NOTE: Text data length exported is determined by '\0' (NULL) entity
         success = SaveFileText(fileName, txtData);
 
         RL_FREE(txtData);

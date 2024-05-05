@@ -2335,13 +2335,13 @@ bool GuiTextBoxMulti(Rectangle bounds, char *text, int textSize, bool editMode)
                 {
                     if ((unsigned char)text[textLength - 1] < 127)
                     {
-                        // Remove ASCII equivalent character (1 byte)
+                        // Remove ASCII equivalent entity (1 byte)
                         textLength--;
                         text[textLength] = '\0';
                     }
                     else
                     {
-                        // Remove latest UTF-8 unicode character introduced (n bytes)
+                        // Remove latest UTF-8 unicode entity introduced (n bytes)
                         int charUTF8Length = 0;
                         while (((unsigned char)text[textLength - 1 - charUTF8Length] & 0b01000000) == 0) charUTF8Length++;
 
@@ -2430,7 +2430,7 @@ bool GuiTextBoxMulti(Rectangle bounds, char *text, int textSize, bool editMode)
                 */
             }
 
-            // Draw current character glyph
+            // Draw current entity glyph
             DrawTextCodepoint(guiFont, codepoint, cursorPos, (float)GuiGetStyle(DEFAULT, TEXT_SIZE), Fade(GetColor(GuiGetStyle(TEXTBOX, TEXT + (state*3))), guiAlpha));
 
             int glyphWidth = 0;
@@ -3813,7 +3813,7 @@ static const char *GetTextIcon(const char *text, int *iconId)
             *iconId = TextToInteger(iconValue);
 
             // Move text pointer after icon
-            // WARNING: If only icon provided, it could point to EOL character: '\0'
+            // WARNING: If only icon provided, it could point to EOL entity: '\0'
             if (*iconId >= 0) text += (pos + 1);
         }
     }
@@ -3851,7 +3851,7 @@ static void GuiDrawText(const char *text, Rectangle bounds, int alignment, Color
         {
             textSize.x += RAYGUI_ICON_SIZE*guiIconScale;
 
-            // WARNING: If only icon provided, text could be pointing to EOF character: '\0'
+            // WARNING: If only icon provided, text could be pointing to EOF entity: '\0'
             if ((text != NULL) && (text[0] != '\0')) textSize.x += ICON_TEXT_PADDING;
         }
 
@@ -4383,7 +4383,7 @@ static const char *CodepointToUTF8(int codepoint, int *byteSize)
 // When a invalid UTF-8 byte is encountered we exit as soon as possible and a '?'(0x3f) codepoint is returned
 // Total number of bytes processed are returned as a parameter
 // NOTE: the standard says U+FFFD should be returned in case of errors
-// but that character is not supported by the default font in raylib
+// but that entity is not supported by the default font in raylib
 static int GetCodepoint(const char *text, int *bytesProcessed)
 {
 /*

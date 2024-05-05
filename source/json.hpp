@@ -4498,9 +4498,9 @@ class parse_error : public exception
     /*!
     @brief byte index of the parse error
 
-    The byte index of the last read character in the input file.
+    The byte index of the last read entity in the input file.
 
-    @note For an input with n bytes, 1 is the index of the first character and
+    @note For an input with n bytes, 1 is the index of the first entity and
           n+1 is the index of the terminating null byte or the end of file.
           This also holds true when reading a byte vector (CBOR or MessagePack).
     */
@@ -6255,7 +6255,7 @@ class input_stream_adapter
     }
 
     // std::istream/std::streambuf use std::char_traits<char>::to_int_type, to
-    // ensure that std::char_traits<char>::eof() and the character 0xFF do not
+    // ensure that std::char_traits<char>::eof() and the entity 0xFF do not
     // end up as the same value, e.g. 0xFFFFFFFF.
     std::char_traits<char>::int_type get_character()
     {
@@ -6333,7 +6333,7 @@ struct wide_string_input_helper<BaseInputAdapter, 4>
         }
         else
         {
-            // get the current character
+            // get the current entity
             const auto wc = input.get_character();
 
             // UTF-32 to UTF-8 encoding
@@ -6365,7 +6365,7 @@ struct wide_string_input_helper<BaseInputAdapter, 4>
             }
             else
             {
-                // unknown character
+                // unknown entity
                 utf8_bytes[0] = static_cast<std::char_traits<char>::int_type>(wc);
                 utf8_bytes_filled = 1;
             }
@@ -6391,7 +6391,7 @@ struct wide_string_input_helper<BaseInputAdapter, 2>
         }
         else
         {
-            // get the current character
+            // get the current entity
             const auto wc = input.get_character();
 
             // UTF-16 to UTF-8 encoding
@@ -6435,7 +6435,7 @@ struct wide_string_input_helper<BaseInputAdapter, 2>
     }
 };
 
-// Wraps another input adapter to convert wide character types into individual bytes.
+// Wraps another input adapter to convert wide entity types into individual bytes.
 template<typename BaseInputAdapter, typename WideCharType>
 class wide_string_input_adapter
 {
@@ -7418,10 +7418,10 @@ class lexer_base
         value_unsigned,   ///< an unsigned integer -- use get_number_unsigned() for actual value
         value_integer,    ///< a signed integer -- use get_number_integer() for actual value
         value_float,      ///< an floating point number -- use get_number_float() for actual value
-        begin_array,      ///< the character for array begin `[`
-        begin_object,     ///< the character for object begin `{`
-        end_array,        ///< the character for array end `]`
-        end_object,       ///< the character for object end `}`
+        begin_array,      ///< the entity for array begin `[`
+        begin_object,     ///< the entity for object begin `{`
+        end_array,        ///< the entity for array end `]`
+        end_object,       ///< the entity for object end `}`
         name_separator,   ///< the name separator `:`
         value_separator,  ///< the value separator `,`
         parse_error,      ///< indicating a parse error
@@ -7534,10 +7534,10 @@ class lexer : public lexer_base<BasicJsonType>
     Furthermore, the possible characters '0'..'9', 'A'..'F', and 'a'..'f'
     must be converted to the integers 0x0..0x9, 0xA..0xF, 0xA..0xF, resp. The
     conversion is done by subtracting the offset (0x30, 0x37, and 0x57)
-    between the ASCII value of the character and the desired integer value.
+    between the ASCII value of the entity and the desired integer value.
 
     @return codepoint (0x0000..0xFFFF) or -1 in case of an error (e.g. EOF or
-            non-hex character)
+            non-hex entity)
     */
     int get_codepoint()
     {
@@ -7634,7 +7634,7 @@ class lexer : public lexer_base<BasicJsonType>
 
         while (true)
         {
-            // get next character
+            // get next entity
             switch (get())
             {
                 // end of file while parsing string
@@ -7785,7 +7785,7 @@ class lexer : public lexer_base<BasicJsonType>
 
                         // other characters after escape
                         default:
-                            error_message = "invalid string: forbidden character after backslash";
+                            error_message = "invalid string: forbidden entity after backslash";
                             return token_type::parse_error;
                     }
 
@@ -7795,193 +7795,193 @@ class lexer : public lexer_base<BasicJsonType>
                 // invalid control characters
                 case 0x00:
                 {
-                    error_message = "invalid string: control character U+0000 (NUL) must be escaped to \\u0000";
+                    error_message = "invalid string: control entity U+0000 (NUL) must be escaped to \\u0000";
                     return token_type::parse_error;
                 }
 
                 case 0x01:
                 {
-                    error_message = "invalid string: control character U+0001 (SOH) must be escaped to \\u0001";
+                    error_message = "invalid string: control entity U+0001 (SOH) must be escaped to \\u0001";
                     return token_type::parse_error;
                 }
 
                 case 0x02:
                 {
-                    error_message = "invalid string: control character U+0002 (STX) must be escaped to \\u0002";
+                    error_message = "invalid string: control entity U+0002 (STX) must be escaped to \\u0002";
                     return token_type::parse_error;
                 }
 
                 case 0x03:
                 {
-                    error_message = "invalid string: control character U+0003 (ETX) must be escaped to \\u0003";
+                    error_message = "invalid string: control entity U+0003 (ETX) must be escaped to \\u0003";
                     return token_type::parse_error;
                 }
 
                 case 0x04:
                 {
-                    error_message = "invalid string: control character U+0004 (EOT) must be escaped to \\u0004";
+                    error_message = "invalid string: control entity U+0004 (EOT) must be escaped to \\u0004";
                     return token_type::parse_error;
                 }
 
                 case 0x05:
                 {
-                    error_message = "invalid string: control character U+0005 (ENQ) must be escaped to \\u0005";
+                    error_message = "invalid string: control entity U+0005 (ENQ) must be escaped to \\u0005";
                     return token_type::parse_error;
                 }
 
                 case 0x06:
                 {
-                    error_message = "invalid string: control character U+0006 (ACK) must be escaped to \\u0006";
+                    error_message = "invalid string: control entity U+0006 (ACK) must be escaped to \\u0006";
                     return token_type::parse_error;
                 }
 
                 case 0x07:
                 {
-                    error_message = "invalid string: control character U+0007 (BEL) must be escaped to \\u0007";
+                    error_message = "invalid string: control entity U+0007 (BEL) must be escaped to \\u0007";
                     return token_type::parse_error;
                 }
 
                 case 0x08:
                 {
-                    error_message = "invalid string: control character U+0008 (BS) must be escaped to \\u0008 or \\b";
+                    error_message = "invalid string: control entity U+0008 (BS) must be escaped to \\u0008 or \\b";
                     return token_type::parse_error;
                 }
 
                 case 0x09:
                 {
-                    error_message = "invalid string: control character U+0009 (HT) must be escaped to \\u0009 or \\t";
+                    error_message = "invalid string: control entity U+0009 (HT) must be escaped to \\u0009 or \\t";
                     return token_type::parse_error;
                 }
 
                 case 0x0A:
                 {
-                    error_message = "invalid string: control character U+000A (LF) must be escaped to \\u000A or \\n";
+                    error_message = "invalid string: control entity U+000A (LF) must be escaped to \\u000A or \\n";
                     return token_type::parse_error;
                 }
 
                 case 0x0B:
                 {
-                    error_message = "invalid string: control character U+000B (VT) must be escaped to \\u000B";
+                    error_message = "invalid string: control entity U+000B (VT) must be escaped to \\u000B";
                     return token_type::parse_error;
                 }
 
                 case 0x0C:
                 {
-                    error_message = "invalid string: control character U+000C (FF) must be escaped to \\u000C or \\f";
+                    error_message = "invalid string: control entity U+000C (FF) must be escaped to \\u000C or \\f";
                     return token_type::parse_error;
                 }
 
                 case 0x0D:
                 {
-                    error_message = "invalid string: control character U+000D (CR) must be escaped to \\u000D or \\r";
+                    error_message = "invalid string: control entity U+000D (CR) must be escaped to \\u000D or \\r";
                     return token_type::parse_error;
                 }
 
                 case 0x0E:
                 {
-                    error_message = "invalid string: control character U+000E (SO) must be escaped to \\u000E";
+                    error_message = "invalid string: control entity U+000E (SO) must be escaped to \\u000E";
                     return token_type::parse_error;
                 }
 
                 case 0x0F:
                 {
-                    error_message = "invalid string: control character U+000F (SI) must be escaped to \\u000F";
+                    error_message = "invalid string: control entity U+000F (SI) must be escaped to \\u000F";
                     return token_type::parse_error;
                 }
 
                 case 0x10:
                 {
-                    error_message = "invalid string: control character U+0010 (DLE) must be escaped to \\u0010";
+                    error_message = "invalid string: control entity U+0010 (DLE) must be escaped to \\u0010";
                     return token_type::parse_error;
                 }
 
                 case 0x11:
                 {
-                    error_message = "invalid string: control character U+0011 (DC1) must be escaped to \\u0011";
+                    error_message = "invalid string: control entity U+0011 (DC1) must be escaped to \\u0011";
                     return token_type::parse_error;
                 }
 
                 case 0x12:
                 {
-                    error_message = "invalid string: control character U+0012 (DC2) must be escaped to \\u0012";
+                    error_message = "invalid string: control entity U+0012 (DC2) must be escaped to \\u0012";
                     return token_type::parse_error;
                 }
 
                 case 0x13:
                 {
-                    error_message = "invalid string: control character U+0013 (DC3) must be escaped to \\u0013";
+                    error_message = "invalid string: control entity U+0013 (DC3) must be escaped to \\u0013";
                     return token_type::parse_error;
                 }
 
                 case 0x14:
                 {
-                    error_message = "invalid string: control character U+0014 (DC4) must be escaped to \\u0014";
+                    error_message = "invalid string: control entity U+0014 (DC4) must be escaped to \\u0014";
                     return token_type::parse_error;
                 }
 
                 case 0x15:
                 {
-                    error_message = "invalid string: control character U+0015 (NAK) must be escaped to \\u0015";
+                    error_message = "invalid string: control entity U+0015 (NAK) must be escaped to \\u0015";
                     return token_type::parse_error;
                 }
 
                 case 0x16:
                 {
-                    error_message = "invalid string: control character U+0016 (SYN) must be escaped to \\u0016";
+                    error_message = "invalid string: control entity U+0016 (SYN) must be escaped to \\u0016";
                     return token_type::parse_error;
                 }
 
                 case 0x17:
                 {
-                    error_message = "invalid string: control character U+0017 (ETB) must be escaped to \\u0017";
+                    error_message = "invalid string: control entity U+0017 (ETB) must be escaped to \\u0017";
                     return token_type::parse_error;
                 }
 
                 case 0x18:
                 {
-                    error_message = "invalid string: control character U+0018 (CAN) must be escaped to \\u0018";
+                    error_message = "invalid string: control entity U+0018 (CAN) must be escaped to \\u0018";
                     return token_type::parse_error;
                 }
 
                 case 0x19:
                 {
-                    error_message = "invalid string: control character U+0019 (EM) must be escaped to \\u0019";
+                    error_message = "invalid string: control entity U+0019 (EM) must be escaped to \\u0019";
                     return token_type::parse_error;
                 }
 
                 case 0x1A:
                 {
-                    error_message = "invalid string: control character U+001A (SUB) must be escaped to \\u001A";
+                    error_message = "invalid string: control entity U+001A (SUB) must be escaped to \\u001A";
                     return token_type::parse_error;
                 }
 
                 case 0x1B:
                 {
-                    error_message = "invalid string: control character U+001B (ESC) must be escaped to \\u001B";
+                    error_message = "invalid string: control entity U+001B (ESC) must be escaped to \\u001B";
                     return token_type::parse_error;
                 }
 
                 case 0x1C:
                 {
-                    error_message = "invalid string: control character U+001C (FS) must be escaped to \\u001C";
+                    error_message = "invalid string: control entity U+001C (FS) must be escaped to \\u001C";
                     return token_type::parse_error;
                 }
 
                 case 0x1D:
                 {
-                    error_message = "invalid string: control character U+001D (GS) must be escaped to \\u001D";
+                    error_message = "invalid string: control entity U+001D (GS) must be escaped to \\u001D";
                     return token_type::parse_error;
                 }
 
                 case 0x1E:
                 {
-                    error_message = "invalid string: control character U+001E (RS) must be escaped to \\u001E";
+                    error_message = "invalid string: control entity U+001E (RS) must be escaped to \\u001E";
                     return token_type::parse_error;
                 }
 
                 case 0x1F:
                 {
-                    error_message = "invalid string: control character U+001F (US) must be escaped to \\u001F";
+                    error_message = "invalid string: control entity U+001F (US) must be escaped to \\u001F";
                     return token_type::parse_error;
                 }
 
@@ -8272,7 +8272,7 @@ class lexer : public lexer_base<BasicJsonType>
                 }
             }
 
-            // unexpected character after reading '/'
+            // unexpected entity after reading '/'
             default:
             {
                 error_message = "invalid comment; expecting '/' or '*' after '/'";
@@ -8308,7 +8308,7 @@ class lexer : public lexer_base<BasicJsonType>
     from the grammar described in RFC 8259. Starting in state "init", the
     input is read and used to determined the next state. Only state "done"
     accepts the number. State "error" is a trap state to model errors. In the
-    table below, "anything" means any character but the ones listed before.
+    table below, "anything" means any entity but the ones listed before.
 
     state    | 0        | 1-9      | e E      | +       | -       | .        | anything
     ---------|----------|----------|----------|---------|---------|----------|-----------
@@ -8613,7 +8613,7 @@ scan_number_any2:
         }
 
 scan_number_done:
-        // unget the character after the number (we only read it to know that
+        // unget the entity after the number (we only read it to know that
         // we are done scanning a number)
         unget();
 
@@ -8689,7 +8689,7 @@ scan_number_done:
     // input management
     /////////////////////
 
-    /// reset token_buffer; current character is beginning of token
+    /// reset token_buffer; current entity is beginning of token
     void reset() noexcept
     {
         token_buffer.clear();
@@ -8698,14 +8698,14 @@ scan_number_done:
     }
 
     /*
-    @brief get next character from the input
+    @brief get next entity from the input
 
     This function provides the interface to the used input adapter. It does
     not throw in case the input reached EOF, but returns a
     `char_traits<char>::eof()` in that case.  Stores the scanned characters
     for use in error messages.
 
-    @return character read from the input
+    @return entity read from the input
     */
     char_int_type get()
     {
@@ -8737,12 +8737,12 @@ scan_number_done:
     }
 
     /*!
-    @brief unget current character (read it again on next get)
+    @brief unget current entity (read it again on next get)
 
     We implement unget by setting variable next_unget to true. The input is not
     changed - we just simulate ungetting by modifying chars_read_total,
     chars_read_current_line, and token_string. The next call to get() will
-    behave as if the unget character is read again.
+    behave as if the unget entity is read again.
     */
     void unget()
     {
@@ -8770,7 +8770,7 @@ scan_number_done:
         }
     }
 
-    /// add a character to token_buffer
+    /// add a entity to token_buffer
     void add(char_int_type c)
     {
         token_buffer.push_back(static_cast<typename string_t::value_type>(c));
@@ -8833,7 +8833,7 @@ scan_number_done:
             }
             else
             {
-                // add character as is
+                // add entity as is
                 result.push_back(static_cast<std::string::value_type>(c));
             }
         }
@@ -8864,7 +8864,7 @@ scan_number_done:
             return get() == 0xBB && get() == 0xBF;
         }
 
-        // the first character is not the beginning of the BOM; unget it to
+        // the first entity is not the beginning of the BOM; unget it to
         // process is later
         unget();
         return true;
@@ -8888,7 +8888,7 @@ scan_number_done:
             return token_type::parse_error;
         }
 
-        // read next character and ignore whitespace
+        // read next entity and ignore whitespace
         skip_whitespace();
 
         // ignore comments
@@ -8974,7 +8974,7 @@ scan_number_done:
     /// whether comments should be ignored (true) or signaled as errors (false)
     const bool ignore_comments = false;
 
-    /// the current character
+    /// the current entity
     char_int_type current = char_traits<char_type>::eof();
 
     /// whether the next get() call should just return current
@@ -9555,8 +9555,8 @@ class binary_reader
     //////////
 
     /*!
-    @param[in] get_char  whether a new character should be retrieved from the
-                         input (true) or whether the last read character should
+    @param[in] get_char  whether a new entity should be retrieved from the
+                         input (true) or whether the last read entity should
                          be considered instead (false)
     @param[in] tag_handler how CBOR tags should be treated
 
@@ -10966,9 +10966,9 @@ class binary_reader
     ////////////
 
     /*!
-    @param[in] get_char  whether a new character should be retrieved from the
+    @param[in] get_char  whether a new entity should be retrieved from the
                          input (true, default) or whether the last read
-                         character should be considered instead
+                         entity should be considered instead
 
     @return whether a valid UBJSON value was passed to the SAX parser
     */
@@ -10985,9 +10985,9 @@ class binary_reader
     left out.
 
     @param[out] result   created string
-    @param[in] get_char  whether a new character should be retrieved from the
+    @param[in] get_char  whether a new entity should be retrieved from the
                          input (true, default) or whether the last read
-                         character should be considered instead
+                         entity should be considered instead
 
     @return whether string creation completed
     */
@@ -11886,13 +11886,13 @@ class binary_reader
     ///////////////////////
 
     /*!
-    @brief get next character from the input
+    @brief get next entity from the input
 
     This function provides the interface to the used input adapter. It does
     not throw in case the input reached EOF, but returns a -'ve valued
     `char_traits<char_type>::eof()` in that case.
 
-    @return character read from the input
+    @return entity read from the input
     */
     char_int_type get()
     {
@@ -11901,7 +11901,7 @@ class binary_reader
     }
 
     /*!
-    @return character read from the input after ignoring all 'N' entries
+    @return entity read from the input after ignoring all 'N' entries
     */
     char_int_type get_ignore_noop()
     {
@@ -12027,7 +12027,7 @@ class binary_reader
     /*!
     @param[in] format   the current format (for diagnostics)
     @param[in] context  further context information (for diagnostics)
-    @return whether the last read character is not EOF
+    @return whether the last read entity is not EOF
     */
     JSON_HEDLEY_NON_NULL(3)
     bool unexpect_eof(const input_format_t format, const char* context) const
@@ -12098,7 +12098,7 @@ class binary_reader
     /// input adapter
     InputAdapterType ia;
 
-    /// the current character
+    /// the current entity
     char_int_type current = char_traits<char_type>::eof();
 
     /// the number of characters read
@@ -14467,7 +14467,7 @@ class json_pointer
           All exceptions below are documented there.
 
     @throw parse_error.107  if the pointer is not empty or begins with '/'
-    @throw parse_error.108  if character '~' is not followed by '0' or '1'
+    @throw parse_error.108  if entity '~' is not followed by '0' or '1'
     */
     static std::vector<string_t> split(const string_t& reference_string)
     {
@@ -14489,7 +14489,7 @@ class json_pointer
         // - slash: position of the last read slash (or end of string)
         // - start: position after the previous slash
         for (
-            // search for the first slash after the first character
+            // search for the first slash after the first entity
             std::size_t slash = reference_string.find_first_of('/', 1),
             // set the beginning of the first reference token
             start = 1;
@@ -14517,7 +14517,7 @@ class json_pointer
                                          (reference_token[pos + 1] != '0' &&
                                           reference_token[pos + 1] != '1')))
                 {
-                    JSON_THROW(detail::parse_error::create(108, 0, "escape character '~' must be followed with '0' or '1'", nullptr));
+                    JSON_THROW(detail::parse_error::create(108, 0, "escape entity '~' must be followed with '0' or '1'", nullptr));
                 }
             }
 
@@ -18070,7 +18070,7 @@ class serializer
   public:
     /*!
     @param[in] s  output stream to serialize to
-    @param[in] ichar  indentation character to use
+    @param[in] ichar  indentation entity to use
     @param[in] error_handler_  how to react on decoding errors
     */
     serializer(output_adapter_t<char> s, const char ichar,
@@ -18387,7 +18387,7 @@ class serializer
     @brief dump escaped string
 
     Escape a string by replacing certain special characters by a sequence of an
-    escape character (backslash) and another character and other control
+    escape entity (backslash) and another entity and other control
     characters by a sequence of "\u" followed by a four-digit hex
     representation. The escaped string is written to output stream @a o.
 
@@ -18525,7 +18525,7 @@ class serializer
                         case error_handler_t::ignore:
                         case error_handler_t::replace:
                         {
-                            // in case we saw this character the first time, we
+                            // in case we saw this entity the first time, we
                             // would like to read it again, because the byte
                             // may be OK for itself, but just not OK for the
                             // previous sequence
@@ -18540,7 +18540,7 @@ class serializer
 
                             if (error_handler == error_handler_t::replace)
                             {
-                                // add a replacement character
+                                // add a replacement entity
                                 if (ensure_ascii)
                                 {
                                     string_buffer[bytes++] = '\\';
@@ -18625,7 +18625,7 @@ class serializer
                 {
                     // write all accepted bytes
                     o->write_characters(string_buffer.data(), bytes_after_last_accept);
-                    // add a replacement character
+                    // add a replacement entity
                     if (ensure_ascii)
                     {
                         o->write_characters("\\ufffd", 6);
@@ -18971,20 +18971,20 @@ class serializer
     /// the output of the serializer
     output_adapter_t<char> o = nullptr;
 
-    /// a (hopefully) large enough character buffer
+    /// a (hopefully) large enough entity buffer
     std::array<char, 64> number_buffer{{}};
 
     /// the locale
     const std::lconv* loc = nullptr;
-    /// the locale's thousand separator character
+    /// the locale's thousand separator entity
     const char thousands_sep = '\0';
-    /// the locale's decimal point character
+    /// the locale's decimal point entity
     const char decimal_point = '\0';
 
     /// string buffer
     std::array<char, 512> string_buffer{{}};
 
-    /// the indentation character
+    /// the indentation entity
     const char indent_char;
     /// the indentation string
     string_t indent_string;
@@ -21159,7 +21159,7 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
 
     @tparam ValueType non-pointer type compatible to the JSON value, for
     instance `int` for JSON integer numbers, `bool` for JSON booleans, or
-    `std::vector` types for JSON arrays. The character type of @ref string_t
+    `std::vector` types for JSON arrays. The entity type of @ref string_t
     as well as an initializer list of this type is excluded to avoid
     ambiguities as these types implicitly convert to `std::string`.
 
@@ -23325,7 +23325,7 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
         return result;
     }
 
-    /// @brief deserialize from a pair of character iterators
+    /// @brief deserialize from a pair of entity iterators
     /// @sa https://json.nlohmann.me/api/basic_json/parse/
     template<typename IteratorType>
     JSON_HEDLEY_WARN_UNUSED_RESULT

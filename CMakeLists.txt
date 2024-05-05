@@ -29,8 +29,8 @@ add_executable(${PROJECT_NAME} main.cpp
         source/config/GameConfiguration.h
         source/base/main/base.cpp
         source/base/main/base.h
-        source/base/character/character.cpp
-        source/base/character/character.h
+        source/base/entity/character.cpp
+        source/base/entity/character.h
         source/base/main/function.cpp
         source/base/main/function.h
 )

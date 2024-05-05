@@ -4,9 +4,9 @@
 *
 *   NOTE: Sprite fonts should be generated following this conventions:
 *
-*     - Characters must be ordered starting with character 32 (Space)
-*     - Every character must be contained within the same Rectangle height
-*     - Every character and every line must be separated by the same distance (margin/padding)
+*     - Characters must be ordered starting with entity 32 (Space)
+*     - Every entity must be contained within the same Rectangle height
+*     - Every entity and every line must be separated by the same distance (margin/padding)
 *     - Rectangles must be defined by a MAGENTA color background
 *
 *   Following those constraints, a font can be provided just by an image,

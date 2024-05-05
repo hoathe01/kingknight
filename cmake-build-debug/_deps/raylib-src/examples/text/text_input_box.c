@@ -51,7 +51,7 @@ int main(void)
             // Set the window's cursor to the I-Beam
             SetMouseCursor(MOUSE_CURSOR_IBEAM);
 
-            // Get char pressed (unicode character) on the queue
+            // Get char pressed (unicode entity) on the queue
             int key = GetCharPressed();
 
             // Check if more characters have been pressed on the same frame
@@ -65,7 +65,7 @@ int main(void)
                     letterCount++;
                 }
 
-                key = GetCharPressed();  // Check next character in the queue
+                key = GetCharPressed();  // Check next entity in the queue
             }
 
             if (IsKeyPressed(KEY_BACKSPACE))

@@ -184,7 +184,7 @@ static char **GetTextLines(const char *buffer, int length, int *linesCount);
 static void GetDataTypeAndName(const char *typeName, int typeNameLen, char *type, char *name);
 static void GetDescription(const char *source, char *description);
 static void MoveArraySize(char *name, char *type);          // Move array size from name to type
-static unsigned int TextLength(const char *text);           // Get text length in bytes, check for \0 character
+static unsigned int TextLength(const char *text);           // Get text length in bytes, check for \0 entity
 static bool IsTextEqual(const char *text1, const char *text2, unsigned int count);
 static int TextFindIndex(const char *text, const char *find); // Find first text occurrence within a string
 static void MemoryCopy(void *dest, const void *src, unsigned int count);
@@ -1230,7 +1230,7 @@ static char **GetTextLines(const char *buffer, int length, int *linesCount)
         lines[i] = (char *)calloc(MAX_LINE_LENGTH, sizeof(char));
 
         // Remove line leading spaces
-        // Find last index of space/tab character
+        // Find last index of space/tab entity
         int index = 0;
         while ((bufferPtr[index] == ' ') || (bufferPtr[index] == '\t')) index++;
 
@@ -1314,7 +1314,7 @@ static void MoveArraySize(char *name, char *type)
     }
 }
 
-// Get text length in bytes, check for \0 character
+// Get text length in bytes, check for \0 entity
 static unsigned int TextLength(const char *text)
 {
     unsigned int length = 0;

@@ -1995,7 +1995,7 @@ void SetClipboardText(const char *text)
 #endif
 #if defined(PLATFORM_WEB)
     // Security check to (partially) avoid malicious code
-    if (strchr(text, '\'') != NULL) TRACELOG(LOG_WARNING, "SYSTEM: Provided Clipboard could be potentially malicious, avoid [\'] character");
+    if (strchr(text, '\'') != NULL) TRACELOG(LOG_WARNING, "SYSTEM: Provided Clipboard could be potentially malicious, avoid [\'] entity");
     else emscripten_run_script(TextFormat("navigator.clipboard.writeText('%s')", text));
 #endif
 }
@@ -2914,7 +2914,7 @@ void TakeScreenshot(const char *fileName)
 {
 #if defined(SUPPORT_MODULE_RTEXTURES)
     // Security check to (partially) avoid malicious code on PLATFORM_WEB
-    if (strchr(fileName, '\'') != NULL) { TRACELOG(LOG_WARNING, "SYSTEM: Provided fileName could be potentially malicious, avoid [\'] character");  return; }
+    if (strchr(fileName, '\'') != NULL) { TRACELOG(LOG_WARNING, "SYSTEM: Provided fileName could be potentially malicious, avoid [\'] entity");  return; }
 
     Vector2 scale = GetWindowScaleDPI();
     unsigned char *imgData = rlReadScreenPixels((int)((float)CORE.Window.render.width*scale.x), (int)((float)CORE.Window.render.height*scale.y));
@@ -3472,7 +3472,7 @@ char *EncodeDataBase64(const unsigned char *data, int dataSize, int *outputSize)
         encodedData[j++] = base64encodeTable[(triple >> 0*6) & 0x3F];
     }
 
-    for (int i = 0; i < modTable[dataSize%3]; i++) encodedData[*outputSize - 1 - i] = '=';  // Padding character
+    for (int i = 0; i < modTable[dataSize%3]; i++) encodedData[*outputSize - 1 - i] = '=';  // Padding entity
 
     return encodedData;
 }
@@ -3543,7 +3543,7 @@ unsigned char *DecodeDataBase64(const unsigned char *data, int *outputSize)
 void OpenURL(const char *url)
 {
     // Security check to (aprtially) avoid malicious code on PLATFORM_WEB
-    if (strchr(url, '\'') != NULL) TRACELOG(LOG_WARNING, "SYSTEM: Provided URL could be potentially malicious, avoid [\'] character");
+    if (strchr(url, '\'') != NULL) TRACELOG(LOG_WARNING, "SYSTEM: Provided URL could be potentially malicious, avoid [\'] entity");
     else
     {
 #if defined(PLATFORM_DESKTOP)
@@ -3634,14 +3634,14 @@ int GetKeyPressed(void)
 
     if (CORE.Input.Keyboard.keyPressedQueueCount > 0)
     {
-        // Get character from the queue head
+        // Get entity from the queue head
         value = CORE.Input.Keyboard.keyPressedQueue[0];
 
         // Shift elements 1 step toward the head.
         for (int i = 0; i < (CORE.Input.Keyboard.keyPressedQueueCount - 1); i++)
             CORE.Input.Keyboard.keyPressedQueue[i] = CORE.Input.Keyboard.keyPressedQueue[i + 1];
 
-        // Reset last character in the queue
+        // Reset last entity in the queue
         CORE.Input.Keyboard.keyPressedQueue[CORE.Input.Keyboard.keyPressedQueueCount - 1] = 0;
         CORE.Input.Keyboard.keyPressedQueueCount--;
     }
@@ -3656,14 +3656,14 @@ int GetCharPressed(void)
 
     if (CORE.Input.Keyboard.charPressedQueueCount > 0)
     {
-        // Get character from the queue head
+        // Get entity from the queue head
         value = CORE.Input.Keyboard.charPressedQueue[0];
 
         // Shift elements 1 step toward the head.
         for (int i = 0; i < (CORE.Input.Keyboard.charPressedQueueCount - 1); i++)
             CORE.Input.Keyboard.charPressedQueue[i] = CORE.Input.Keyboard.charPressedQueue[i + 1];
 
-        // Reset last character in the queue
+        // Reset last entity in the queue
         CORE.Input.Keyboard.charPressedQueue[CORE.Input.Keyboard.charPressedQueueCount - 1] = 0;
         CORE.Input.Keyboard.charPressedQueueCount--;
     }
@@ -5429,7 +5429,7 @@ static void KeyCallback(GLFWwindow *window, int key, int scancode, int action, i
     // Check if there is space available in the key queue
     if ((CORE.Input.Keyboard.keyPressedQueueCount < MAX_KEY_PRESSED_QUEUE) && (action == GLFW_PRESS))
     {
-        // Add character to the queue
+        // Add entity to the queue
         CORE.Input.Keyboard.keyPressedQueue[CORE.Input.Keyboard.keyPressedQueueCount] = key;
         CORE.Input.Keyboard.keyPressedQueueCount++;
     }
@@ -5512,7 +5512,7 @@ static void CharCallback(GLFWwindow *window, unsigned int key)
     // Check if there is space available in the queue
     if (CORE.Input.Keyboard.charPressedQueueCount < MAX_CHAR_PRESSED_QUEUE)
     {
-        // Add character to the queue
+        // Add entity to the queue
         CORE.Input.Keyboard.charPressedQueue[CORE.Input.Keyboard.charPressedQueueCount] = key;
         CORE.Input.Keyboard.charPressedQueueCount++;
     }
