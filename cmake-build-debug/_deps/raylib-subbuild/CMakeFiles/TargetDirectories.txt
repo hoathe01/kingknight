@@ -1,0 +1,3 @@
+X:/Mental/CplusGame/KingKnight/cmake-build-debug/_deps/raylib-subbuild/CMakeFiles/raylib-populate.dir
+X:/Mental/CplusGame/KingKnight/cmake-build-debug/_deps/raylib-subbuild/CMakeFiles/edit_cache.dir
+X:/Mental/CplusGame/KingKnight/cmake-build-debug/_deps/raylib-subbuild/CMakeFiles/rebuild_cache.dir

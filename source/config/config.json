@@ -1,0 +1,18 @@
+{
+  "screen": {
+    "name": "King Knight",
+    "width": 980,
+    "height": 800,
+    "fps": 60
+  },
+  "setting":{
+  },
+  "texture": {
+    "character": {
+      "idle": "../source/texture/_Idle.png"
+    },
+    "Enemy": {
+
+    }
+  }
+}

@@ -1,0 +1,23 @@
+# ninja log v5
+10410	10500	7364493094764134	X:/Mental/CplusGame/KingKnight/cmake-build-debug/_deps/raylib-subbuild/raylib-populate-prefix/src/raylib-populate-stamp/raylib-populate-build	c3a9eda02847942c
+2	94	7364492990716708	raylib-populate-prefix/src/raylib-populate-stamp/raylib-populate-mkdir	ec01d7cfc211d082
+2	94	7364492990716708	X:/Mental/CplusGame/KingKnight/cmake-build-debug/_deps/raylib-subbuild/raylib-populate-prefix/src/raylib-populate-stamp/raylib-populate-mkdir	ec01d7cfc211d082
+94	10024	7364493089964870	raylib-populate-prefix/src/raylib-populate-stamp/raylib-populate-download	c7f4b82a947f23f6
+10585	10670	7364493096460702	raylib-populate-prefix/src/raylib-populate-stamp/raylib-populate-test	7628a51fd309e738
+94	10024	7364493089964870	raylib-populate-prefix/src/4.5.0.tar.gz	c7f4b82a947f23f6
+94	10024	7364493089964870	X:/Mental/CplusGame/KingKnight/cmake-build-debug/_deps/raylib-subbuild/raylib-populate-prefix/src/raylib-populate-stamp/raylib-populate-download	c7f4b82a947f23f6
+10024	10157	7364493091291190	X:/Mental/CplusGame/KingKnight/cmake-build-debug/_deps/raylib-subbuild/raylib-populate-prefix/src/raylib-populate-stamp/raylib-populate-update	9137029eb0263992
+10024	10157	7364493091291190	raylib-populate-prefix/src/raylib-populate-stamp/raylib-populate-update	9137029eb0263992
+94	10024	7364493089964870	X:/Mental/CplusGame/KingKnight/cmake-build-debug/_deps/raylib-subbuild/raylib-populate-prefix/src/4.5.0.tar.gz	c7f4b82a947f23f6
+10670	10789	7364493097649285	X:/Mental/CplusGame/KingKnight/cmake-build-debug/_deps/raylib-subbuild/CMakeFiles/raylib-populate-complete	2f67ac63dae05efd
+10157	10279	7364493092520868	raylib-populate-prefix/src/raylib-populate-stamp/raylib-populate-patch	5bcf085820464aba
+10157	10279	7364493092520868	X:/Mental/CplusGame/KingKnight/cmake-build-debug/_deps/raylib-subbuild/raylib-populate-prefix/src/raylib-populate-stamp/raylib-populate-patch	5bcf085820464aba
+10279	10410	7364493093830112	raylib-populate-prefix/src/raylib-populate-stamp/raylib-populate-configure	1cd900fa92f5c261
+10279	10410	7364493093830112	X:/Mental/CplusGame/KingKnight/cmake-build-debug/_deps/raylib-subbuild/raylib-populate-prefix/src/raylib-populate-stamp/raylib-populate-configure	1cd900fa92f5c261
+10410	10500	7364493094764134	raylib-populate-prefix/src/raylib-populate-stamp/raylib-populate-build	c3a9eda02847942c
+10500	10585	7364493095606384	raylib-populate-prefix/src/raylib-populate-stamp/raylib-populate-install	db97ce2450658f54
+10500	10585	7364493095606384	X:/Mental/CplusGame/KingKnight/cmake-build-debug/_deps/raylib-subbuild/raylib-populate-prefix/src/raylib-populate-stamp/raylib-populate-install	db97ce2450658f54
+10585	10670	7364493096460702	X:/Mental/CplusGame/KingKnight/cmake-build-debug/_deps/raylib-subbuild/raylib-populate-prefix/src/raylib-populate-stamp/raylib-populate-test	7628a51fd309e738
+10670	10789	7364493097649285	CMakeFiles/raylib-populate-complete	2f67ac63dae05efd
+10670	10789	7364493097649285	X:/Mental/CplusGame/KingKnight/cmake-build-debug/_deps/raylib-subbuild/raylib-populate-prefix/src/raylib-populate-stamp/raylib-populate-done	2f67ac63dae05efd
+10670	10789	7364493097649285	raylib-populate-prefix/src/raylib-populate-stamp/raylib-populate-done	2f67ac63dae05efd
